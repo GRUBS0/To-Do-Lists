@@ -24,7 +24,11 @@ struct ContentView: View {
                             .foregroundColor(.orange)
                     }
                     .padding(.vertical, 8)
+                    // Adds 8 points of space **above and below** the view (top and bottom).
+                    // This pushes the view away from other elements vertically.
                     .padding(.horizontal, 10)
+                    // Adds 10 points of space on the left and right of the view.
+                    // This pushes the view away from other elements horizontally.
                     .background(Color(.darkGray))
                     .cornerRadius(10)
                 }
