@@ -13,14 +13,21 @@ struct ContentView: View {
 
                         Text(assignment.course)
                             .font(.headline)
+                            .foregroundColor(.blue)
 
                         Text(assignment.description)
                             .font(.subheadline)
+                            .foregroundColor(.primary)
 
                         Text("Due: \(assignment.dueDate.formatted(date: .abbreviated, time: .omitted))")
                             .font(.caption)
+                            .foregroundColor(.red)
+
                     }
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
                 }
                 .onDelete { indexSet in
                     notebook.items.remove(atOffsets: indexSet)
@@ -29,16 +36,20 @@ struct ContentView: View {
                     notebook.items.move(fromOffsets: indices, toOffset: newOffset)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Assignment Notebook")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()
+                        .foregroundColor(.blue)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingAddScreen = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
                     }
                 }
             }
