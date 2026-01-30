@@ -13,20 +13,19 @@ struct ContentView: View {
 
                         Text(assignment.course)
                             .font(.headline)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.cyan)
 
                         Text(assignment.description)
                             .font(.subheadline)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
 
                         Text("Due: \(assignment.dueDate.formatted(date: .abbreviated, time: .omitted))")
                             .font(.caption)
-                            .foregroundColor(.red)
-
+                            .foregroundColor(.orange)
                     }
                     .padding(.vertical, 8)
                     .padding(.horizontal, 10)
-                    .background(Color(.systemGray6))
+                    .background(Color(.darkGray))
                     .cornerRadius(10)
                 }
                 .onDelete { indexSet in
@@ -37,12 +36,12 @@ struct ContentView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(Color(.systemGroupedBackground))
+            .background(Color.black)
             .navigationTitle("Assignment Notebook")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()
-                        .foregroundColor(.blue)
+                        .foregroundColor(.white)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -57,6 +56,7 @@ struct ContentView: View {
                 AddAssignmentView(notebook: notebook)
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
