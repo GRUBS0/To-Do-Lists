@@ -41,7 +41,7 @@ struct ContentView: View {
             }
             .scrollContentBackground(.hidden)
             .background(Color.black)
-            .navigationTitle("Assignment Notebook")
+            .navigationTitle("Assignment Reminders")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()

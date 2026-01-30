@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		3E274B292F290B9F005E1D5A /* To-Do Lists */ = {
+		3E274B292F290B9F005E1D5A /* Reminders */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "To-Do Lists";
+			path = Reminders;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		3E274B1E2F290B9F005E1D5A = {
 			isa = PBXGroup;
 			children = (
-				3E274B292F290B9F005E1D5A /* To-Do Lists */,
+				3E274B292F290B9F005E1D5A /* Reminders */,
 				3E274B282F290B9F005E1D5A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				3E274B292F290B9F005E1D5A /* To-Do Lists */,
+				3E274B292F290B9F005E1D5A /* Reminders */,
 			);
 			name = "To-Do Lists";
 			packageProductDependencies = (
