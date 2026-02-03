@@ -2,73 +2,140 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State private var notebook = AssignmentList()
+    @StateObject private var notebook = AssignmentList()
     @State private var showingAddScreen = false
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(notebook.items) { assignment in
-                    VStack(alignment: .leading, spacing: 6) {
+            ZStack {
+                // Background
+                Color.black.ignoresSafeArea()
 
-                        Text(assignment.course)
-                            .font(.headline)
-                            .foregroundColor(.cyan)
+                VStack(spacing: 0) {
 
-                        Text(assignment.description)
-                            .font(.subheadline)
-                            .foregroundColor(.white)
+                    // Top header
+                    headerView
 
-                        Text("Due: \(assignment.dueDate.formatted(date: .abbreviated, time: .omitted))")
-                            .font(.caption)
-                            .foregroundColor(.orange)
+                    // Assignment list
+                    List {
+                        ForEach(notebook.items) { assignment in
+                            assignmentCard(assignment)
+                                .listRowBackground(Color.black)
+                                .listRowSeparator(.hidden)
+                        }
+                        .onDelete { indexSet in
+                            notebook.items.remove(atOffsets: indexSet)
+                        }
+                        .onMove { indices, newOffset in
+                            notebook.items.move(fromOffsets: indices, toOffset: newOffset)
+                        }
                     }
-                    .padding(.vertical, 8)
-                    // Adds 8 points of space **above and below** the view (top and bottom).
-                    // This pushes the view away from other elements vertically.
-                    .padding(.horizontal, 10)
-                    // Adds 10 points of space on the left and right of the view.
-                    // This pushes the view away from other elements horizontally.
-                    .background(Color(.darkGray))
-                    .cornerRadius(10)
-                }
-                .onDelete { indexSet in
-                    notebook.items.remove(atOffsets: indexSet)
-                }
-                .onMove { indices, newOffset in
-                    notebook.items.move(fromOffsets: indices, toOffset: newOffset)
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
                 }
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.black)
-            .navigationTitle("Assignment Reminders")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                        .foregroundColor(.white)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAddScreen = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                    }
-                }
-            }
+            .navigationBarHidden(true)
             .sheet(isPresented: $showingAddScreen) {
                 AddAssignmentView(notebook: notebook)
             }
         }
-        .preferredColorScheme(.dark)
     }
-}
 
-struct AssignmentItem: Identifiable, Codable {
-    var id = UUID()
-    var course: String
-    var description: String
-    var dueDate: Date
+    // MARK: - Header
+    private var headerView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Assignment")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white)
+
+                    Text("Notebook")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white.opacity(0.8))
+                }
+
+                Spacer()
+
+                Button {
+                    showingAddScreen = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.black)
+                        .padding(12)
+                        .background(Color.white)
+                        .clipShape(Circle())
+                }
+            }
+
+            Text("Tap + to add • Swipe to delete • Edit to reorder")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.6))
+        }
+        .padding()
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.purple, Color.blue, Color.black]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(25)
+        .padding(.horizontal)
+        .padding(.top, 10)
+    }
+
+    // MARK: - Assignment Card
+    private func assignmentCard(_ assignment: AssignmentItem) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+
+            HStack {
+                // Course badge
+                Text(assignment.course)
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(courseColor(assignment.course))
+                    .cornerRadius(10)
+
+                Spacer()
+
+                Text(assignment.dueDate.formatted(date: .abbreviated, time: .omitted))
+                    .font(.caption2)
+                    .foregroundColor(.white.opacity(0.7))
+            }
+
+            Text(assignment.description)
+                .font(.headline)
+                .foregroundColor(.white)
+
+            Text("Due Date")
+                .font(.caption2)
+                .foregroundColor(.white.opacity(0.5))
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 18)
+                .fill(Color.white.opacity(0.08))
+                .shadow(radius: 8)
+        )
+        .padding(.vertical, 6)
+    }
+
+    // MARK: - Course Colors
+    private func courseColor(_ course: String) -> Color {
+        switch course {
+        case "Math": return .blue
+        case "English": return .red
+        case "Science": return .green
+        case "History": return .orange
+        case "Computer Science": return .purple
+        default: return .gray
+        }
+    }
 }
 
 #Preview {
