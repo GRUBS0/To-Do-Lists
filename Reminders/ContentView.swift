@@ -40,8 +40,6 @@ struct ContentView: View {
             }
         }
     }
-
-    // MARK: - Header
     private var headerView: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -69,7 +67,7 @@ struct ContentView: View {
                 }
             }
 
-            Text("Tap + to add • Swipe to delete • Edit to reorder")
+            Text("Tap + to add  Swipe to delete  Edit to reorder")
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.6))
         }
@@ -85,13 +83,9 @@ struct ContentView: View {
         .padding(.horizontal)
         .padding(.top, 10)
     }
-
-    // MARK: - Assignment Card
     private func assignmentCard(_ assignment: AssignmentItem) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-
             HStack {
-                // Course badge
                 Text(assignment.course)
                     .font(.caption)
                     .fontWeight(.bold)
@@ -100,18 +94,14 @@ struct ContentView: View {
                     .padding(.vertical, 6)
                     .background(courseColor(assignment.course))
                     .cornerRadius(10)
-
                 Spacer()
-
                 Text(assignment.dueDate.formatted(date: .abbreviated, time: .omitted))
                     .font(.caption2)
                     .foregroundColor(.white.opacity(0.7))
             }
-
             Text(assignment.description)
                 .font(.headline)
                 .foregroundColor(.white)
-
             Text("Due Date")
                 .font(.caption2)
                 .foregroundColor(.white.opacity(0.5))
@@ -124,8 +114,6 @@ struct ContentView: View {
         )
         .padding(.vertical, 6)
     }
-
-    // MARK: - Course Colors
     private func courseColor(_ course: String) -> Color {
         switch course {
         case "Math": return .blue
@@ -137,7 +125,6 @@ struct ContentView: View {
         }
     }
 }
-
 #Preview {
     ContentView()
 }
